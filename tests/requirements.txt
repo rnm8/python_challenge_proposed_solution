@@ -1,0 +1,16 @@
+pytest==7.2.0
+moto==4.0.12
+python-jose==3.3.0
+pyyaml==6.0
+coverage==7.0.3
+boto3==1.26.42
+pynamodb==5.3.4
+responses==0.22.0
+pytest_socket==0.5.1
+freezegun==1.2.2
+requests_mock==1.10.0
+pytest-mock==3.10.0
+aws_lambda_powertools==2.6.0
+aws_xray_sdk==2.11.0
+pycryptodome==3.17.0
+ecdsa==0.18.0
