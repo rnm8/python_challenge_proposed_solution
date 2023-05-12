@@ -17,6 +17,7 @@ from aws_lambda_powertools.logging.correlation_paths import API_GATEWAY_REST
 from request_validation import parse_event
 from util_helper import clean_data_fields, decrypt_data
 from models.booking import Booking
+from models.bag import Bag
 
 # Initialize env vars
 CORS = os.environ["CORS"].strip()
@@ -38,6 +39,33 @@ class BookingInput:
 def lambda_handler(event, context):
     booking_input = parse_event(event, BookingInput)
     bookings = find_relevant_bookings(booking_input)
+
+    """
+    assumption being made in this scenario is that a booking can have multiple bags and a bag can only belong to one booking
+    """
+    # check for body in event, else use empty dict
+    if 'body' in event:
+        body = event['body']
+    else:
+        body = {}
+    
+    # check for bags in body, else use empty dict again
+    if 'bags' in body:
+        bag_data = body['bags']
+    else:
+        bag_data = {}
+        
+    bags = {}
+
+    # for each bag, put into dict
+    for id, data in bag_data.items():
+        bag = Bag(**data)
+        bags[id] = bag
+
+    # add bag to each booking
+    for booking in bookings:
+        booking_actions = [Booking.bags.set(bags)]
+        booking.update(actions=booking_actions)
 
     return map_to_output(bookings)
 
