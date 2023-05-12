@@ -87,3 +87,44 @@ class TestGetBookings:
         assert response["statusCode"] == 200
         assert body == response_json
 
+def test_request(self, get_lambda, insert_data, lambda_context):
+        # load test_booking.json mock data for testing.
+        insert_data(
+        Path(__file__).parent / "data/test_booking.json",
+        {"diva-blp-booking": ["nric_sha"]},
+        )
+    
+        # mock bag data ("bag1", "bag2") with data for color and weight.
+        bag_details = {
+            "bag1": {"color": "red", "weight": 5000},
+            "bag2": {"color": "blue", "weight": 10000},
+        }
+
+        # mock request with test details for company, and bags dict
+        request_body = {
+            "company": "CAG",
+            "start_of_week": "2022-01-03",
+            "location": "Airport",
+            "bags": bag_details
+        }
+
+        # mock a HTTP request body
+        request_body_json = json.dumps(request_body)
+
+        # populate body of mock request.
+        request = {
+            "body": request_body_json,
+        }
+
+        # trigger mock request and context, and capture the response body
+        response = get_lambda.lambda_handler(request, lambda_context)
+
+        # reuse existing pattens to handle if response is a string
+        if isinstance(response, str):
+            body = json.loads(response["body"])
+        else:
+            body = response.get("body", {})
+
+        # if correct, status code of 200 (indicating success) and a non-empty body
+        assert response["statusCode"] == 200
+        assert len(body) > 0
