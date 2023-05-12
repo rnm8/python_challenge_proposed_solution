@@ -2,7 +2,8 @@
 from typing import Optional
 from pynamodb.models import Model
 from pynamodb.indexes import GlobalSecondaryIndex, AllProjection
-from pynamodb.attributes import UnicodeAttribute
+from pynamodb.attributes import UnicodeAttribute, MapAttribute
+from .bag import Bag
 
 try:
     import util_constants, util_helper
@@ -38,6 +39,12 @@ class Booking(Model):
     company_startofweek_index  = CompanyStartOfWeekIndex()
     # BooleanAttribute() 
     # UTCDateTimeAttribute()
+    bags = MapAttribute(of=Bag)
+    """
+    - Lists would not be efficient when accessing specific bag
+    - Dict/Maps would be better aligned with use cases such as retrieving all bags under a single booking
+    - DynamoDB is designed for key-value access patterns
+    """
     
 def setup_model(tablename: Optional[str] = None):
     return util_helper.setup_model(Booking, tablename)
