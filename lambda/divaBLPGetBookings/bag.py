@@ -6,5 +6,6 @@ class Bag:
     color: str
     weight: float
     """
-    to ensure accuracy in grams for baggage weighing
+    - color is not treated as optional, as it would make human identification of bags more difficult
+    - float to ensure accuracy in grams for baggage weighing
     """
