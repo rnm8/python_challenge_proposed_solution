@@ -70,6 +70,7 @@ def set_env_vars():
     os.environ["BOOKING_DB_NAME"] = "diva-blp-booking"
     os.environ["CORS"] = "*"
     os.environ["SNS_TOPIC"] = "test-topic"
+    os.environ["BAG_DB_NAME"] = "diva-blp-bags"
 
 
 @pytest.fixture(autouse=True, scope="session")
