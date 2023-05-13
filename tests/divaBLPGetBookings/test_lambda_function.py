@@ -23,6 +23,13 @@ sys.path.append(os.path.abspath("../lambda/divaBLPGetBookings"))
 def get_lambda():
     return importlib.import_module("lambda.divaBLPGetBookings.lambda_function")
 
+@pytest.fixture(scope="function")
+def bag_details():
+    return {
+        "bag1": {"color": "red", "weight": 5000},
+        "bag2": {"color": "blue", "weight": 10000},
+    }
+
 
 # Note: freeze_time freezes the datetime at UTC time. Thus @freeze_time("2022-01-03") actually freezes time at
 # 2022-01-03 08:00:00 GMT+8
@@ -87,7 +94,7 @@ class TestGetBookings:
         assert response["statusCode"] == 200
         assert body == response_json
 
-def test_request(self, get_lambda, insert_data, lambda_context):
+    def test_request(self, get_lambda, insert_data, lambda_context, bag_details):
         # load test_booking.json mock data for testing.
         insert_data(
         Path(__file__).parent / "data/test_booking.json",
@@ -95,10 +102,13 @@ def test_request(self, get_lambda, insert_data, lambda_context):
         )
     
         # mock bag data ("bag1", "bag2") with data for color and weight.
+        # moved to top as a pytest fixture
+        """
         bag_details = {
             "bag1": {"color": "red", "weight": 5000},
             "bag2": {"color": "blue", "weight": 10000},
-        }
+        }        
+        """
 
         # mock request with test details for company, and bags dict
         request_body = {

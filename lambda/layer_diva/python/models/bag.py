@@ -14,7 +14,8 @@ class Bag(Model):
     class Meta:
         region = util_constants.REGION
         table_name = "diva-blp-bags"
-
+        encrypted_fields = ["id"]
+        # adding encrypted field due to test error; may need to modify conftest to remove call
     id = UnicodeAttribute(hash_key=True)
     color = UnicodeAttribute()
     weight = NumberAttribute()
