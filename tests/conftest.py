@@ -68,7 +68,6 @@ def lambda_context():
 def set_env_vars():
     # setting env vars
     os.environ["BOOKING_DB_NAME"] = "diva-blp-booking"
-    os.environ["BAG_DB_NAME"] = "diva-blp-bag"  # rohan added
     os.environ["CORS"] = "*"
     os.environ["SNS_TOPIC"] = "test-topic"
 
@@ -133,13 +132,6 @@ def init_tables(ddb_client, kms_setup):
         create_encrypted_fields_map(models),
     )
 
-    # insert(
-    #     ddb_client,
-    #     kms_setup,
-    #     "stubData/init_data_bag.json",
-    #     create_encrypted_fields_map(models),
-    # )
-
 
 def insert(
     ddb_client,
@@ -159,8 +151,7 @@ def insert(
 
 def create_encrypted_fields_map(models):
     return reduce(
-        lambda acc, model: {
-            **acc, model.Meta.table_name: model.Meta.encrypted_fields},
+        lambda acc, model: {**acc, model.Meta.table_name: model.Meta.encrypted_fields},
         models,
         {},
     )
