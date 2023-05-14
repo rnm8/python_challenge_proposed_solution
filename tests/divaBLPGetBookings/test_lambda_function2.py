@@ -8,7 +8,8 @@ import json
 import base64
 import importlib
 from pathlib import Path
-import sys, os
+import sys
+import os
 from responses import GET, POST
 from freezegun import freeze_time
 
@@ -85,4 +86,3 @@ class TestGetBookings:
 
         assert response["statusCode"] == 200
         assert body == response_json
-

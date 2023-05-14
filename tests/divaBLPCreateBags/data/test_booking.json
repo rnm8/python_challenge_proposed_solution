@@ -2,7 +2,7 @@
   "diva-blp-booking": [
     {
       "capsule_id": {
-        "S": "888888"
+        "S": "123456"
       },
       "activity_date": {
         "S": "2022-01-05"
@@ -19,19 +19,26 @@
       "nric_sha": {
         "S": "1d83712192a87df9531606e77f5c57cb111a359b522a69405497ba98001057bf"
       }
-    }
-  ],
-  "diva-blp-bag": [
+    },
     {
-      "bag_id": {
-        "S": "Bag1"
+      "capsule_id": {
+        "S": "555555"
       },
-      "weight": {
-        "N": "1.0"
+      "activity_date": {
+        "S": "2022-01-05"
       },
-      "color": {
-        "S": "red"
+      "start_of_week": {
+        "S": "2022-01-03"
+      },
+      "company": {
+        "S": "CAG"
+      },
+      "location": {
+        "S": "Airport"
+      },
+      "nric_sha": {
+        "S": "1d83712192a87df9531606e77f5c57cb111a359b522a69405497ba98001057bf"
       }
-    }
+    } 
   ]
 }
