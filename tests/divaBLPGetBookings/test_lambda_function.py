@@ -86,3 +86,23 @@ class TestGetBookings:
         assert response["statusCode"] == 200
         assert body == response_json
 
+    def test_insert_bag(self, get_lambda, insert_data, lambda_context):
+        #print(get_lambda)
+        #print(lambda_context)
+        insert_data(
+            Path(__file__).parent / "data/test_bag.json",
+        )
+
+        response_json = load_file(
+            Path(__file__).parent / "response/bag_response.json"
+        )
+
+        request = {
+            "body": json.dumps({}),
+        }
+
+        response = get_lambda.lambda_handler(request, lambda_context)
+        body = json.loads(response["body"])
+
+        assert response["statusCode"] == 200
+        assert body == response_json

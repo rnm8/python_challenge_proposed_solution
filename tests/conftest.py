@@ -70,7 +70,8 @@ def set_env_vars():
     os.environ["BOOKING_DB_NAME"] = "diva-blp-booking"
     os.environ["CORS"] = "*"
     os.environ["SNS_TOPIC"] = "test-topic"
-
+    os.environ["BAG_DB_NAME"] = "diva-blp-bag"
+    # to set env var for test function
 
 @pytest.fixture(autouse=True, scope="session")
 def kms_setup():
